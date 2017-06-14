@@ -1,5 +1,6 @@
 import {observable} from 'mobx'
 import JsonModel from '../models/JsonModel'
+import Constants from '../services/Constants';
 
 export class JsonStore {
   @observable isLoading = false
@@ -11,11 +12,11 @@ export class JsonStore {
   loadJob(jobName) {
     this.isLoading = true
     var otherThis = this
-    $.getJSON('v1/scheduler/job/' + encodeURIComponent(jobName)).done(function(resp) {
+    $.getJSON(Constants.chronos.url + 'v1/scheduler/job/' + encodeURIComponent(jobName)).done(function (resp) {
       var serverJobNames = new Set()
       otherThis.job = JsonModel.fromJS(this, resp)
       otherThis.isLoading = false
-    }).fail(function() {
+    }).fail(function () {
       otherThis.isLoading = false
     })
   }
