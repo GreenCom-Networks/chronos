@@ -86,10 +86,7 @@ class JobSummaryView extends React.Component {
     )
   }
   render() {
-    const jobs = this.props.jobs.sort((a, b) => {
-      return a.name < b.name ? -1 : 1;
-    });
-
+    const jobs = this.props.jobs
     return (
       <div>
         <div className="table-responsive">

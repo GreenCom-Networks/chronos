@@ -2,7 +2,6 @@ import React from 'react'
 import JobSummaryView from './JobSummaryView'
 import JobEditor from './JobEditor'
 import {observer} from 'mobx-react'
-import $ from 'jquery'
 
 @observer
 export default class Main extends React.Component {

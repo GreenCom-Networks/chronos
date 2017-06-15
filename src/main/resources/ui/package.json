@@ -16,8 +16,7 @@
     "start": "node bin/server.js",
     "dev": "webpack --progress --colors",
     "build": "webpack --progress --colors --optimize-minimize --optimize-occurrence-order --optimize-dedupe --config webpack-release.config.js --bail",
-    "lint": "eslint --fix ./",
-    "watch": "webpack-dev-server --progess --color --inline"
+    "lint": "eslint --fix ./"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -50,7 +49,5 @@
     "webpack-dev-server": "^1.16.2",
     "webpack-hot-middleware": "^2.13.2"
   },
-  "dependencies": {
-    "webpack-dev-server": "^1.16.5"
-  }
+  "dependencies": {}
 }
