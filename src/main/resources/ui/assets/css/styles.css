@@ -3,7 +3,24 @@
   line-height: 34px !important;
 }
 
- span.jobName:hover {
+span.jobName:hover {
+ cursor: pointer;
+ text-decoration: underline;
+}
+
+.jobSummaryView th {
   cursor: pointer;
-  text-decoration: underline;
+}
+
+.jobSummaryView th:after{
+  font-size: 20px;
+  margin-left: 5px;
+}
+
+.jobSummaryView th.filter:after{
+  content: "\25BE";
+}
+
+.jobSummaryView th.filterReverse:after{
+  content: "\25B4";
 }

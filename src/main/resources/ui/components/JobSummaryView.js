@@ -14,6 +14,16 @@ $(document).ready(function () {
 class JobSummaryView extends React.Component {
   jsonStore = new JsonStore()
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      jobs: this.props.jobs,
+      currentFilter: null,
+      reverseFilterOrder: null
+    };
+  }
+
   disabledWrap(job, value) {
     if (job.disabled) {
       return (
@@ -98,17 +108,37 @@ class JobSummaryView extends React.Component {
   }
 
   render() {
-    const jobs = this.props.jobs
+    const jobs = this.state.jobs
     return (
-      <div>
+      <div className="jobSummaryView">
         <div className="table-responsive">
           <table className="table table-striped table-hover table-condensed">
             <thead>
             <tr>
-              <th>JOB</th>
-              <th>NEXT RUN</th>
-              <th>STATUS</th>
-              <th>STATE</th>
+              <th onClick={() => {
+                this.filterColumn('name')
+              }}
+                  className={this.getFilterClassName('name')}>
+                JOB
+              </th>
+              <th onClick={() => {
+                this.filterColumn('schedule')
+              }}
+                  className={this.getFilterClassName('schedule')}>
+                NEXT RUN
+              </th>
+              <th onClick={() => {
+                this.filterColumn('status')
+              }}
+                  className={this.getFilterClassName('status')}>
+                STATUS
+              </th>
+              <th onClick={() => {
+                this.filterColumn('state')
+              }}
+                  className={this.getFilterClassName('state')}>
+                STATE
+              </th>
               <th className="text-right">ACTIONS</th>
             </tr>
             </thead>
@@ -121,6 +151,14 @@ class JobSummaryView extends React.Component {
         <JobDetails jsonStore={this.jsonStore}/>
       </div>
     )
+  }
+
+  getFilterClassName(column) {
+    if (this.state.currentFilter === column && !this.state.reverseFilterOrder) {
+      return "filter"
+    } else if (this.state.currentFilter === column) {
+      return "filterReverse"
+    }
   }
 
   getStatusClass(job) {
@@ -201,6 +239,25 @@ class JobSummaryView extends React.Component {
   showJobDetails(job) {
     this.jsonStore.loadJob(job.name, false)
     $('#job-details-modal').modal('show')
+  }
+
+  filterColumn(column) {
+    let reverseFilterOrder = false;
+    let filteredJobs = this.state.jobs.sort((a, b) => {
+      return a[column] < b[column] ? -1 : 1;
+    });
+
+    //sort in reverse order in case of second click on the same column
+    if (this.state.currentFilter === column && !this.state.reverseFilterOrder) {
+      filteredJobs = filteredJobs.reverse();
+      reverseFilterOrder = !this.state.reverseFilterOrder;
+    }
+
+    this.setState({
+      jobs: filteredJobs,
+      currentFilter: column,
+      reverseFilterOrder: reverseFilterOrder
+    })
   }
 }
 
