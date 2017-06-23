@@ -24,11 +24,18 @@ class JobSummaryView extends React.Component {
     };
   }
 
-  componentWillReceiveProps(props){
-    if(props.jobs.length !== this.state.jobs.length){
-      this.setState({jobs: props.jobs.sort((a, b) => {
-        return a[this.state.currentFilter] < b[this.state.currentFilter] ? -1 : 1;
-      })});
+  componentWillReceiveProps(props) {
+    if (props.jobs.length !== this.state.jobs.length) {
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+      }
+      this.timeout = setTimeout(() => {
+        this.setState({
+          jobs: props.jobs.sort((a, b) => {
+            return a[this.state.currentFilter] < b[this.state.currentFilter] ? -1 : 1;
+          })
+        });
+      }, 200);
     }
   }
 
