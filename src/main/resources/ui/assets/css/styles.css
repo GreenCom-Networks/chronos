@@ -46,7 +46,8 @@ span.jobName:hover {
 }
 
 .table .running {
-  background-color: #8cc4f0;
+  background-color: #337AB7;
+  color: white;
 }
 
 .table .queued {
