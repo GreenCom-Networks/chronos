@@ -19,14 +19,16 @@ class JobSummaryView extends React.Component {
 
     this.state = {
       jobs: this.props.jobs,
-      currentFilter: null,
+      currentFilter: "name",
       reverseFilterOrder: null
     };
   }
 
   componentWillReceiveProps(props){
     if(props.jobs.length !== this.state.jobs.length){
-      this.setState({jobs: props.jobs});
+      this.setState({jobs: props.jobs.sort((a, b) => {
+        return a[this.state.currentFilter] < b[this.state.currentFilter] ? -1 : 1;
+      })});
     }
   }
 
