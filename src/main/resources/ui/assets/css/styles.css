@@ -1,26 +1,46 @@
-.job-details-modal .panel-group .keyVal .control-label{
+* {
+  font-weight: 400 !important;
+}
+
+.job-details-modal .panel-group .keyVal .control-label {
   height: 34px !important;
   line-height: 34px !important;
 }
 
 span.jobName:hover {
- cursor: pointer;
- text-decoration: underline;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .jobSummaryView th {
   cursor: pointer;
 }
 
-.jobSummaryView th:after{
+.jobSummaryView th:after {
   font-size: 20px;
   margin-left: 5px;
 }
 
-.jobSummaryView th.filter:after{
+.jobSummaryView th.filter:after {
+  content: "\25B4";
+}
+
+.jobSummaryView th.filterReverse:after {
   content: "\25BE";
 }
 
-.jobSummaryView th.filterReverse:after{
-  content: "\25B4";
+.table>tbody>tr>td.warning {
+  background-color: #F2DEDE;
+}
+
+.table-hover>tbody>tr:hover>.warning, .table-hover>tbody>tr>td.warning:hover {
+  background-color: #ebcccc;
+}
+
+.table>tbody>tr>td.danger {
+  background-color: #fcf8e3;
+}
+
+.table-hover>tbody>tr:hover>.danger, .table-hover>tbody>tr>td.danger:hover {
+  background-color: #faf2cc;
 }
