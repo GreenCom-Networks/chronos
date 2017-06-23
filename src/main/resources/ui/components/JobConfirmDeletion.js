@@ -18,6 +18,10 @@ class JobConfirmDeletion extends React.Component {
     this.props.callback(this.props.jobToDelete.job.name);
   }
 
+  close(){
+    $('#job-confirm-deletion-modal').modal('hide');
+  }
+
   render() {
     console.log(this.props.jobToDelete)
     return (
@@ -36,7 +40,7 @@ class JobConfirmDeletion extends React.Component {
                 job {this.props.jobToDelete.job ? this.props.jobToDelete.job.name : ""} ?</p>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-danger">Cancel</button>
+              <button type="button" className="btn btn-danger" onClick={() => this.close()}>Cancel</button>
               <button type="button"
                       className="btn btn-success btn-secondary" onClick={() => this.deleteJob()}>
                 Confirm

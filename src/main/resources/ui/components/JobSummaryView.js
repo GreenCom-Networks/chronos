@@ -191,10 +191,10 @@ class JobSummaryView extends React.Component {
 
   getStateClass(job) {
     if (job.state.match(/\d+ running/)) {
-      return 'success'
+      return 'running'
     }
     if (job.state === 'queued') {
-      return 'info'
+      return 'queued'
     }
     return ''
   }

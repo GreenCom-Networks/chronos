@@ -44,3 +44,11 @@ span.jobName:hover {
 .table-hover>tbody>tr:hover>.danger, .table-hover>tbody>tr>td.danger:hover {
   background-color: #faf2cc;
 }
+
+.table .running {
+  background-color: #8cc4f0;
+}
+
+.table .queued {
+  background-color: #D9EDF7;
+}
