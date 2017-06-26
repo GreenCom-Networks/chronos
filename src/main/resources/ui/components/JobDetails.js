@@ -54,7 +54,7 @@ class JobDetails extends React.Component {
         [
           {
             key: 'Current state',
-            value: new Date(store.job.json.lastSuccess) > new Date(store.job.json.lastError) ? 'success' : 'error'
+            value: new Date(store.job.json.lastSuccess || "2000-01-01T00:00:00.000Z") > new Date(store.job.json.lastError || "2000-01-01T00:00:00.000Z") ? 'success' : 'error'
           },
           {
             key: 'Last success',
