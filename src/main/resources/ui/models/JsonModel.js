@@ -9,8 +9,6 @@ export default class JsonModel {
     this.name = name
 
     // remove specific fields
-    delete json['lastError']
-    delete json['lastSuccess']
     delete json['errorsSinceLastSuccess']
     delete json['successCount']
     delete json['errorCount']

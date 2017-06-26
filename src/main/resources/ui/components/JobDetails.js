@@ -24,7 +24,7 @@ class JobDetails extends React.Component {
           },
           {
             key: "Schedule",
-            value: store.job.json.name
+            value: store.job.json.schedule
           },
           {
             key: "Command",
@@ -47,12 +47,22 @@ class JobDetails extends React.Component {
         ],
         [
           {
-            key: "Owner",
-            value: store.job.json.owner
+            key: "Container image",
+            value: store.job.json.container ? store.job.json.container.image : ''
+          }
+        ],
+        [
+          {
+            key: 'Current state',
+            value: new Date(store.job.json.lastSuccess) > new Date(store.job.json.lastError) ? 'success' : 'error'
           },
           {
-            key: "Owner name",
-            value: store.job.json.ownerName
+            key: 'Last success',
+            value: store.job.json.lastSuccess
+          },
+          {
+            key: 'Last error',
+            value: store.job.json.lastError
           }
         ]
       ]
