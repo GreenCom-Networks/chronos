@@ -64,9 +64,30 @@ class JobDetails extends React.Component {
             key: 'Last error',
             value: store.job.json.lastError
           }
+        ],
+        [
+          {
+            key: 'Error since last success',
+            value: store.job.json.errorsSinceLastSuccess
+          },
+          {
+            key: 'Success count',
+            value: store.job.json.successCount
+          },
+          {
+            key: 'Error count',
+            value: store.job.json.errorCount
+          }
         ]
       ]
     }
+
+    /*
+
+     delete jsonStore.job.json.errorsSinceLastSuccess;
+     delete jsonStore.job.json.successCount;
+     delete jsonStore.job.json.errorCount;
+     */
 
     return (
       <div className="modal fade in job-details-modal" id="job-details-modal" role="dialog"

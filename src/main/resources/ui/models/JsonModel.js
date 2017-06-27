@@ -7,12 +7,6 @@ export default class JsonModel {
   constructor(store, name, json) {
     this.store = store
     this.name = name
-
-    // remove specific fields
-    delete json['errorsSinceLastSuccess']
-    delete json['successCount']
-    delete json['errorCount']
-
     this.json = json
   }
 
