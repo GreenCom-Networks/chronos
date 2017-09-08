@@ -67,7 +67,7 @@ class JobDetails extends React.Component {
         ],
         [
           {
-            key: 'Error since last success',
+            key: 'Errors since last success',
             value: store.job.json.errorsSinceLastSuccess
           },
           {

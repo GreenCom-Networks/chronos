@@ -1,4 +1,4 @@
-FROM docker.gcn-lab.fr:5043/greencom-networks/oracle-java8
+FROM openjdk:8-jre
 
 ARG http_proxy
 ENV http_proxy ${http_proxy}

@@ -1,7 +1,7 @@
 sudo: false
 language: scala
 env:
-  - NODE_VERSION=7.2.0
+  - NODE_VERSION=8.1.3
 install:
   - nvm install $NODE_VERSION
 script:
