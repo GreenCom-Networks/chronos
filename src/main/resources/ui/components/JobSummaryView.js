@@ -22,7 +22,8 @@ class JobSummaryView extends React.Component {
       jobs: this.props.jobs,
       currentFilter: "name",
       reverseFilterOrder: null,
-      jobToDelete: {}
+      jobToDelete: {},
+      selectedFolder: null
     };
   }
 
@@ -72,6 +73,26 @@ class JobSummaryView extends React.Component {
     }
   }
 
+  selectFolder(folder) {
+    console.log(folder)
+    this.setState({selectedFolder: folder})
+  }
+
+  renderJobFolder(folder) {
+    return (
+      <tr key={folder} className="folder" onClick={this.selectFolder.bind(this, folder)}>
+        <td>
+          <i className="fa fa-folder" aria-hidden="true"/> {folder}
+        </td>
+        <td data-container="body" data-toggle="tooltip" data-placement="top"/>
+        <td/>
+        <td/>
+        <td>
+        </td>
+      </tr>
+    );
+  }
+
   renderJob(job) {
     return (
       <tr key={job.name}>
@@ -87,10 +108,10 @@ class JobSummaryView extends React.Component {
               onClick={(event) => this.runJob(event, job)}
               className="btn btn-success btn-secondary"
               aria-label="Run"
-              data-loading-text='<i class="fa fa-spinner fa-pulse fa-fw"></i>'
+              data-loading-text='<i class="fa fa-spinner fa-pulse fa-fw"/>'
               autoComplete="off"
               title="Run">
-              <i className="fa fa-play" aria-hidden="true"></i>
+              <i className="fa fa-play" aria-hidden="true"/>
             </button>
             <button
               type="button"
@@ -98,25 +119,25 @@ class JobSummaryView extends React.Component {
               aria-label="Edit"
               onClick={() => this.editJob(job)}
               title="Edit">
-              <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+              <i className="fa fa-pencil-square-o" aria-hidden="true"/>
             </button>
             <button
               type="button"
               className="btn btn-warning"
               aria-label="Stop"
-              data-loading-text='<i class="fa fa-spinner fa-pulse fa-fw"></i>'
+              data-loading-text='<i class="fa fa-spinner fa-pulse fa-fw"/>'
               onClick={(event) => this.stopJob(event, job)}
               title="Stop">
-              <i className="fa fa-stop" aria-hidden="true"></i>
+              <i className="fa fa-stop" aria-hidden="true"/>
             </button>
             <button
               type="button"
               className="btn btn-danger"
               aria-label="Delete"
-              data-loading-text='<i class="fa fa-spinner fa-pulse fa-fw"></i>'
+              data-loading-text='<i class="fa fa-spinner fa-pulse fa-fw"/>'
               onClick={(event) => this.deleteJob(this, job)}
               title="Delete">
-              <i className="fa fa-times" aria-hidden="true"></i>
+              <i className="fa fa-times" aria-hidden="true"/>
             </button>
           </div>
         </td>
@@ -124,8 +145,27 @@ class JobSummaryView extends React.Component {
     )
   }
 
+  backToRootFolder(){
+    this.setState({selectedFolder: null});
+  }
+
   render() {
-    const jobs = this.state.jobs
+    let jobsByCustomer = {};
+    let othersJob = [];
+    this.state.jobs.forEach(job => {
+      let splittedJobName = job.name.split('_');
+      let customer = splittedJobName[0];
+      let codename = splittedJobName[1];
+      if (customer && codename) {
+        if (!jobsByCustomer[customer]) {
+          jobsByCustomer[customer] = [];
+        }
+
+        jobsByCustomer[customer].push(job);
+      } else {
+        othersJob.push(job);
+      }
+    });
     return (
       <div className="jobSummaryView">
         <div className="table-responsive">
@@ -160,13 +200,33 @@ class JobSummaryView extends React.Component {
             </tr>
             </thead>
             <tbody>
-            {jobs.map(job => this.renderJob(job))}
+            {this.state.selectedFolder && (
+              <tr className="folder" onClick={this.backToRootFolder.bind(this)}>
+                <td>
+                  <i className="fa fa-folder" aria-hidden="true"/> ..
+                </td>
+                <td data-container="body" data-toggle="tooltip" data-placement="top"/>
+                <td/>
+                <td/>
+                <td>
+                </td>
+              </tr>
+            )}
+
+            {this.state.selectedFolder ? (
+              Object.values(jobsByCustomer).filter(jobs => jobs[0].name.split('_')[0] === this.state.selectedFolder)[0].map(job => this.renderJob(job))
+            ) : (
+              Object.keys(jobsByCustomer).map(customer => this.renderJobFolder(customer))
+            )}
+
+            {!this.state.selectedFolder && othersJob.map(job => this.renderJob(job))}
             </tbody>
           </table>
         </div>
         <JsonEditor jsonStore={this.jsonStore}/>
         <JobDetails jsonStore={this.jsonStore}/>
-        <JobConfirmDeletion jobToDelete={this.state.jobToDelete} callback={this.deleteJobCallback.bind(this)} doRequest={this.doRequest}/>
+        <JobConfirmDeletion jobToDelete={this.state.jobToDelete} callback={this.deleteJobCallback.bind(this)}
+                            doRequest={this.doRequest}/>
       </div>
     )
   }
@@ -247,7 +307,7 @@ class JobSummaryView extends React.Component {
     $('#job-confirm-deletion-modal').modal('show');
   }
 
-  deleteJobCallback(job){
+  deleteJobCallback(job) {
     console.log("deleted job " + job)
   }
 

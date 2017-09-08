@@ -1,5 +1,5 @@
 export default {
   chronos: {
-    apiUrl: ""
+    apiUrl: "http://dev-chronos.gcn-lab.fr/"
   }
 }
